@@ -85,22 +85,22 @@ function App() {
     });
   }, []);
 
-  return authState === AuthState.SignedIn && user ? (
-    <div className={classes.root}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <HashRouter>
-          <Switch>
-            <Route exact path="/" component={AllPosts} />
-            <Route exact path="/global-timeline" component={AllPosts} />
-            <Route exact path="/:userId" component={PostsBySpecifiedUser} />
-            <Redirect path="*" to="/" />
-          </Switch>
-        </HashRouter>
-      </ThemeProvider>
-    </div>
-  ) : (
+  return (
     <AmplifyAuthenticator>
+      <div className={classes.root}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <HashRouter>
+            <Switch>
+              <Route exact path="/" component={AllPosts} />
+              <Route exact path="/global-timeline" component={AllPosts} />
+              <Route exact path="/:userId" component={PostsBySpecifiedUser} />
+              <Redirect path="*" to="/" />
+            </Switch>
+          </HashRouter>
+        </ThemeProvider>
+      </div>
+      ) : (
       <AmplifySignUp
         slot="sign-up"
         formFields={[
@@ -111,6 +111,32 @@ function App() {
       />
     </AmplifyAuthenticator>
   );
+  // return authState === AuthState.SignedIn && user ? (
+  //   <div className={classes.root}>
+  //     <ThemeProvider theme={theme}>
+  //       <CssBaseline />
+  //       <HashRouter>
+  //         <Switch>
+  //           <Route exact path="/" component={AllPosts} />
+  //           <Route exact path="/global-timeline" component={AllPosts} />
+  //           <Route exact path="/:userId" component={PostsBySpecifiedUser} />
+  //           <Redirect path="*" to="/" />
+  //         </Switch>
+  //       </HashRouter>
+  //     </ThemeProvider>
+  //   </div>
+  // ) : (
+  //   <AmplifyAuthenticator>
+  //     <AmplifySignUp
+  //       slot="sign-up"
+  //       formFields={[
+  //         { type: "username" },
+  //         { type: "password" },
+  //         { type: "email" },
+  //       ]}
+  //     />
+  //   </AmplifyAuthenticator>
+  // );
 }
 
 export default App;
