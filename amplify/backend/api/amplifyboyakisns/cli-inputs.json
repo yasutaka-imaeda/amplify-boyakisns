@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "amplifyboyakisns",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/imaedayasutaka/Desktop/study_programming/amplify-boyakisns/amplify/backend/api/amplifyboyakisns/schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 7
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "AMAZON_COGNITO_USER_POOLS",
+        "cognitoUserPoolId": "authamplifyboyakisnsd65f6a44"
+      }
+    ]
+  }
+}

@@ -1,57 +1,115 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React from "react";
+import Amplify from "aws-amplify";
+import { AmplifyAuthenticator, AmplifySignUp } from "@aws-amplify/ui-react";
+import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+import awsconfig from "./aws-exports";
+
+import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
+
+import {
+  makeStyles,
+  createMuiTheme,
+  ThemeProvider,
+} from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
+import AllPosts from "../src/containers/AllPosts";
+import PostsBySpecifiedUser from "./containers/PostsBySpecifiedUser";
+
+Amplify.configure(awsconfig);
+
+const drawerWidth = 240;
+
+const theme = createMuiTheme({
+  palette: {
+    type: "dark",
+    primary: {
+      main: "#1EA1F2",
+      contrastText: "#fff",
+    },
+    background: {
+      default: "#15202B",
+      paper: "#15202B",
+    },
+    divider: "#37444C",
+  },
+  overrides: {
+    MuiButton: {
+      color: "white",
+    },
+  },
+  typography: {
+    fontFamily: ["Arial"].join(","),
+  },
+  status: {
+    danger: "orange",
+  },
+} as any);
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    height: "100%",
+    width: 800,
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  appBar: {
+    marginLeft: drawerWidth,
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(3),
+  },
+}));
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+  const [authState, setAuthState] = React.useState<any>();
+  const [user, setUser] = React.useState<any>();
+
+  const classes = useStyles();
+
+  React.useEffect(() => {
+    return onAuthUIStateChange((nextAuthState, authData) => {
+      setAuthState(nextAuthState);
+      setUser(authData);
+    });
+  }, []);
+
+  return authState === AuthState.SignedIn && user ? (
+    <div className={classes.root}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <HashRouter>
+          <Switch>
+            <Route exact path="/" component={AllPosts} />
+            <Route exact path="/global-timeline" component={AllPosts} />
+            <Route exact path="/:userId" component={PostsBySpecifiedUser} />
+            <Redirect path="*" to="/" />
+          </Switch>
+        </HashRouter>
+      </ThemeProvider>
     </div>
+  ) : (
+    <AmplifyAuthenticator>
+      <AmplifySignUp
+        slot="sign-up"
+        formFields={[
+          { type: "username" },
+          { type: "password" },
+          { type: "email" },
+        ]}
+      />
+    </AmplifyAuthenticator>
   );
 }
 
