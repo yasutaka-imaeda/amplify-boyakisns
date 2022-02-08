@@ -12,14 +12,14 @@
       "AmplifyAppId": "d2hycghq2w69fe"
     },
     "categories": {
-      "auth": {
-        "amplifyboyakisnsd65f6a44": {}
-      },
       "hosting": {
         "amplifyhosting": {
           "appId": "d2hycghq2w69fe",
           "type": "manual"
         }
+      },
+      "auth": {
+        "amplifyboyakisnsb94f5d7b": {}
       }
     }
   }

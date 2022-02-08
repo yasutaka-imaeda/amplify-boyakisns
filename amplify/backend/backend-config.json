@@ -24,14 +24,16 @@
     }
   },
   "auth": {
-    "amplifyboyakisnsd65f6a44": {
+    "amplifyboyakisnsb94f5d7b": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
-        "usernameAttributes": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
         "signupAttributes": [
           "EMAIL"
         ],
