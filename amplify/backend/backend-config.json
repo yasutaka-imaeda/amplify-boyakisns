@@ -15,7 +15,7 @@
             {
               "authenticationType": "AMAZON_COGNITO_USER_POOLS",
               "userPoolConfig": {
-                "userPoolId": "authamplifyboyakisnsd65f6a44"
+                "userPoolId": "authamplifyboyakisns08a64149"
               }
             }
           ]
@@ -24,16 +24,14 @@
     }
   },
   "auth": {
-    "amplifyboyakisnsb94f5d7b": {
+    "amplifyboyakisns08a64149": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
+        "usernameAttributes": [],
         "signupAttributes": [
           "EMAIL"
         ],
@@ -49,13 +47,6 @@
           "EMAIL"
         ]
       }
-    }
-  },
-  "hosting": {
-    "amplifyhosting": {
-      "service": "amplifyhosting",
-      "providerPlugin": "awscloudformation",
-      "type": "manual"
     }
   }
 }
