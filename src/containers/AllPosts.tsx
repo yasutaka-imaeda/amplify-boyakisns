@@ -7,6 +7,12 @@ import { onCreatePost } from "../graphql/subscriptions";
 
 import PostList from "../components/PostList";
 import Sidebar from "./Sidebar";
+import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+
+import Amplify from "aws-amplify";
+import config from "../aws-exports";
+
+Amplify.configure(config);
 
 const SUBSCRIPTION = "SUBSCRIPTION";
 const INITIAL_QUERY = "INITIAL_QUERY";
@@ -24,23 +30,28 @@ const reducer = (state: any, action: any) => {
       return state;
   }
 };
-const data: any = API.graphql(graphqlOperation(listPosts));
-console.log(data);
 
 const AllPosts: any = () => {
+  // userが認証されているかどうかでAPI呼び出し
+  const [authState, setAuthState] = useState<any>();
+  const [user, setUser] = useState<any>();
+  useEffect(() => {
+    return onAuthUIStateChange((nextAuthState, authData) => {
+      setAuthState(nextAuthState);
+      setUser(authData);
+    });
+  }, []);
+  if (authState === AuthState.SignedIn && user) {
+    const data: any = API.graphql(graphqlOperation(listPosts));
+    console.log(data);
+  }
+
   const [posts, dispatch] = useReducer(reducer, []);
   const [nextToken, setNextToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const getPosts = async (type: any, nextToken = null) => {
-    const res: any = await API.graphql(
-      graphqlOperation(listPostsSortedByTimestamp, {
-        type: "post",
-        sortDirection: "DESC",
-        limit: 20, //default = 10
-        nextToken: nextToken,
-      })
-    );
+    const res: any = await API.graphql(graphqlOperation(listPosts));
     console.log(res);
     dispatch({ type: type, posts: res.data.listPostsSortedByTimestamp.items });
     setNextToken(res.data.listPostsSortedByTimestamp.nextToken);

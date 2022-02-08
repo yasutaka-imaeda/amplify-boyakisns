@@ -12,7 +12,11 @@ type Post
         provider: userPools
         operations: [read, create, delete]
       }
-      { allow: private, provider: userPools, operations: [read] }
+      {
+        allow: private
+        provider: userPools
+        operations: [read, create, delete]
+      }
     ]
   ) {
   type: String! @index(name: "SortByTimestamp", sortKeyFields: ["timestamp"])

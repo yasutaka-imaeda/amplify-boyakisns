@@ -16,6 +16,11 @@ import {
 import { useHistory } from "react-router";
 import moment from "moment";
 
+import Amplify from "aws-amplify";
+import config from "../aws-exports";
+
+Amplify.configure(config);
+
 const useStyles = makeStyles(() => ({
   listRoot: {
     width: "100%",

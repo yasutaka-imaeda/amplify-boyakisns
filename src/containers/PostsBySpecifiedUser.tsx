@@ -9,6 +9,11 @@ import { onCreatePost } from "../graphql/subscriptions";
 import PostList from "../components/PostList";
 import Sidebar from "./Sidebar";
 
+import Amplify from "aws-amplify";
+import config from "../aws-exports";
+
+Amplify.configure(config);
+
 const SUBSCRIPTION = "SUBSCRIPTION";
 const INITIAL_QUERY = "INITIAL_QUERY";
 const ADDITIONAL_QUERY = "ADDITIONAL_QUERY";

@@ -17,6 +17,11 @@ import { Auth, API, graphqlOperation } from "aws-amplify";
 import { createPost } from "../graphql/mutations";
 import { useHistory } from "react-router";
 
+import Amplify from "aws-amplify";
+import config from "../aws-exports";
+
+Amplify.configure(config);
+
 const drawerWidth = 340;
 const MAX_POST_CONTENT_LENGTH = 140;
 
