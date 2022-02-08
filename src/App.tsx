@@ -2,7 +2,7 @@ import React from "react";
 import Amplify from "aws-amplify";
 import { AmplifyAuthenticator, AmplifySignUp } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
-import awsconfig from "./aws-exports";
+import awsExports from "./aws-exports";
 
 import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
 
@@ -16,7 +16,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import AllPosts from "../src/containers/AllPosts";
 import PostsBySpecifiedUser from "./containers/PostsBySpecifiedUser";
 
-Amplify.configure(awsconfig);
+Amplify.configure(awsExports);
 
 const drawerWidth = 240;
 
