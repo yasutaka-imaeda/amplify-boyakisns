@@ -1,8 +1,8 @@
 import React from "react";
 import Amplify from "aws-amplify";
 import {
-  AmplifyAuthenticator,
-  AmplifySignUp,
+  // AmplifyAuthenticator,
+  // AmplifySignUp,
   withAuthenticator,
 } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
