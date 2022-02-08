@@ -33,18 +33,18 @@ const reducer = (state: any, action: any) => {
 
 const AllPosts: any = () => {
   // userが認証されているかどうかでAPI呼び出し
-  const [authState, setAuthState] = useState<any>();
-  const [user, setUser] = useState<any>();
-  useEffect(() => {
-    return onAuthUIStateChange((nextAuthState, authData) => {
-      setAuthState(nextAuthState);
-      setUser(authData);
-    });
-  }, []);
-  if (authState === AuthState.SignedIn && user) {
-    const data: any = API.graphql(graphqlOperation(listPosts));
-    console.log(data);
-  }
+  // const [authState, setAuthState] = useState<any>();
+  // const [user, setUser] = useState<any>();
+  // useEffect(() => {
+  //   return onAuthUIStateChange((nextAuthState, authData) => {
+  //     setAuthState(nextAuthState);
+  //     setUser(authData);
+  //   });
+  // }, []);
+  // if (authState === AuthState.SignedIn && user) {
+  //   const data: any = API.graphql(graphqlOperation(listPosts));
+  //   console.log(data);
+  // }
 
   const [posts, dispatch] = useReducer(reducer, []);
   const [nextToken, setNextToken] = useState(null);

@@ -65,17 +65,18 @@ const Sideber: any = ({ activeListItem }: any) => {
     }
   };
 
-
   const { userId }: any = useParams();
 
   const onPost = async () => {
+    const random = Math.random();
     const res = await API.graphql(
       graphqlOperation(createPost, {
         input: {
           type: "post",
           content: value,
+          id: `${random}`,
           timestamp: Math.floor(Date.now() / 1000),
-          owner: userId
+          owner: userId,
         },
       })
     );

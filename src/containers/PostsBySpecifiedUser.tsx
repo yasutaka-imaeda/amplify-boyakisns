@@ -63,7 +63,7 @@ const PostsBySpecifiedUser: any = () => {
       },
     });
     return () => subscription.unsubscribe();
-  }, []);
+  }, [userId]);
 
   return (
     <React.Fragment>
