@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer } from "react";
 
 import { API, graphqlOperation } from "aws-amplify";
 
-import { listPostsSortedByTimestamp } from "../graphql/queries";
+import { listPosts, listPostsSortedByTimestamp } from "../graphql/queries";
 import { onCreatePost } from "../graphql/subscriptions";
 
 import PostList from "../components/PostList";
@@ -24,6 +24,8 @@ const reducer = (state: any, action: any) => {
       return state;
   }
 };
+const data: any = API.graphql(graphqlOperation(listPosts));
+console.log(data);
 
 const AllPosts: any = () => {
   const [posts, dispatch] = useReducer(reducer, []);
