@@ -1,6 +1,10 @@
 import React from "react";
 import Amplify from "aws-amplify";
-import { AmplifyAuthenticator, AmplifySignUp } from "@aws-amplify/ui-react";
+import {
+  AmplifyAuthenticator,
+  AmplifySignUp,
+  withAuthenticator,
+} from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import awsExports from "./aws-exports";
 
@@ -85,24 +89,7 @@ function App() {
     });
   }, []);
 
-  // return (
-  //   <AmplifyAuthenticator>
-  //     <div className={classes.root}>
-  //       <ThemeProvider theme={theme}>
-  //         <CssBaseline />
-  //         <HashRouter>
-  //           <Switch>
-  //             <Route exact path="/" component={AllPosts} />
-  //             <Route exact path="/global-timeline" component={AllPosts} />
-  //             <Route exact path="/:userId" component={PostsBySpecifiedUser} />
-  //             <Redirect path="*" to="/" />
-  //           </Switch>
-  //         </HashRouter>
-  //       </ThemeProvider>
-  //     </div>
-  //   </AmplifyAuthenticator>
-  // );
-  return authState === AuthState.SignedIn && user ? (
+  return (
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -116,18 +103,34 @@ function App() {
         </HashRouter>
       </ThemeProvider>
     </div>
-  ) : (
-    <AmplifyAuthenticator>
-      <AmplifySignUp
-        slot="sign-up"
-        formFields={[
-          { type: "username" },
-          { type: "password" },
-          { type: "email" },
-        ]}
-      />
-    </AmplifyAuthenticator>
   );
+
+  // return authState === AuthState.SignedIn && user ? (
+  //   <div className={classes.root}>
+  //     <ThemeProvider theme={theme}>
+  //       <CssBaseline />
+  //       <HashRouter>
+  //         <Switch>
+  //           <Route exact path="/" component={AllPosts} />
+  //           <Route exact path="/global-timeline" component={AllPosts} />
+  //           <Route exact path="/:userId" component={PostsBySpecifiedUser} />
+  //           <Redirect path="*" to="/" />
+  //         </Switch>
+  //       </HashRouter>
+  //     </ThemeProvider>
+  //   </div>
+  // ) : (
+  //   <AmplifyAuthenticator>
+  //     <AmplifySignUp
+  //       slot="sign-up"
+  //       formFields={[
+  //         { type: "username" },
+  //         { type: "password" },
+  //         { type: "email" },
+  //       ]}
+  //     />
+  //   </AmplifyAuthenticator>
+  // );
 }
 
-export default App;
+export default withAuthenticator(App);
