@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer } from "react";
 
 import { API, graphqlOperation } from "aws-amplify";
 
-import { listPosts, listPostsSortedByTimestamp } from "../graphql/queries";
+import { listPosts } from "../graphql/queries";
 import { onCreatePost } from "../graphql/subscriptions";
 
 import PostList from "../components/PostList";
@@ -53,8 +53,8 @@ const AllPosts: any = () => {
   const getPosts = async (type: any, nextToken = null) => {
     const res: any = await API.graphql(graphqlOperation(listPosts));
     console.log(res);
-    dispatch({ type: type, posts: res.data.listPostsSortedByTimestamp.items });
-    setNextToken(res.data.listPostsSortedByTimestamp.nextToken);
+    dispatch({ type: type, posts: res.data.listPosts.items });
+    setNextToken(res.data.listPosts.nextToken);
     setIsLoading(false);
   };
 

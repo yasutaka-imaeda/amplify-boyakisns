@@ -16,9 +16,11 @@ import { Auth, API, graphqlOperation } from "aws-amplify";
 
 import { createPost } from "../graphql/mutations";
 import { useHistory } from "react-router";
+import { useParams } from "react-router";
 
 import Amplify from "aws-amplify";
 import config from "../aws-exports";
+import { ENGINE_METHOD_PKEY_ASN1_METHS } from "constants";
 
 Amplify.configure(config);
 
@@ -63,6 +65,9 @@ const Sideber: any = ({ activeListItem }: any) => {
     }
   };
 
+
+  const { userId }: any = useParams();
+
   const onPost = async () => {
     const res = await API.graphql(
       graphqlOperation(createPost, {
@@ -70,6 +75,7 @@ const Sideber: any = ({ activeListItem }: any) => {
           type: "post",
           content: value,
           timestamp: Math.floor(Date.now() / 1000),
+          owner: userId
         },
       })
     );

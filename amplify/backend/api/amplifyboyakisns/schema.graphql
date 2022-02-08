@@ -20,7 +20,7 @@ type Post
     ]
   ) {
   type: String! @index(name: "SortByTimestamp", sortKeyFields: ["timestamp"])
-  id: ID
+  id: ID! @primaryKey
   content: String!
   owner: String @index(name: "BySpecificOwner", sortKeyFields: ["timestamp"])
   timestamp: Int!

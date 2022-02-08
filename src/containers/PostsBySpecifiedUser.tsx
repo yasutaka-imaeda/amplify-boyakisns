@@ -3,7 +3,7 @@ import React, { useState, useEffect, useReducer } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { useParams } from "react-router";
 
-import { listPostsBySpecificOwner } from "../graphql/queries";
+import { listPosts } from "../graphql/queries";
 import { onCreatePost } from "../graphql/subscriptions";
 
 import PostList from "../components/PostList";
@@ -39,17 +39,10 @@ const PostsBySpecifiedUser: any = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getPosts = async (type: any, nextToken = null) => {
-    const res: any = await API.graphql(
-      graphqlOperation(listPostsBySpecificOwner, {
-        owner: userId,
-        sortDirection: "DESC",
-        limit: 20,
-        nextToken: nextToken,
-      })
-    );
+    const res: any = await API.graphql(graphqlOperation(listPosts));
     console.log(res);
-    dispatch({ type: type, posts: res.data.listPostsBySpecificOwner.items });
-    setNextToken(res.data.listPostsBySpecificOwner.nextToken);
+    dispatch({ type: type, posts: res.data.listPosts.items });
+    setNextToken(res.data.listPosts.nextToken);
     setIsLoading(false);
   };
 
