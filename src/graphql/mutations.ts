@@ -13,6 +13,7 @@ export const createPost = /* GraphQL */ `
       content
       owner
       timestamp
+      timelinePostId
     }
   }
 `;
@@ -27,6 +28,7 @@ export const deletePost = /* GraphQL */ `
       content
       owner
       timestamp
+      timelinePostId
     }
   }
 `;
@@ -51,6 +53,28 @@ export const deleteFollowRelationship = /* GraphQL */ `
       followeeId
       followerId
       timestamp
+    }
+  }
+`;
+export const createTimeline = /* GraphQL */ `
+  mutation CreateTimeline(
+    $input: CreateTimelineInput!
+    $condition: ModelTimelineConditionInput
+  ) {
+    createTimeline(input: $input, condition: $condition) {
+      userId
+      timestamp
+      post {
+        items {
+          type
+          id
+          content
+          owner
+          timestamp
+          timelinePostId
+        }
+        nextToken
+      }
     }
   }
 `;

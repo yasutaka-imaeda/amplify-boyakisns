@@ -10,6 +10,7 @@ export const getPost = /* GraphQL */ `
       content
       owner
       timestamp
+      timelinePostId
     }
   }
 `;
@@ -34,6 +35,7 @@ export const listPosts = /* GraphQL */ `
         content
         owner
         timestamp
+        timelinePostId
       }
       nextToken
     }
@@ -67,6 +69,51 @@ export const listFollowRelationships = /* GraphQL */ `
         followeeId
         followerId
         timestamp
+      }
+      nextToken
+    }
+  }
+`;
+export const getTimeline = /* GraphQL */ `
+  query GetTimeline($userId: ID!) {
+    getTimeline(userId: $userId) {
+      userId
+      timestamp
+      post {
+        items {
+          type
+          id
+          content
+          owner
+          timestamp
+          timelinePostId
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const listTimelines = /* GraphQL */ `
+  query ListTimelines(
+    $userId: ID
+    $filter: ModelTimelineFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listTimelines(
+      userId: $userId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        userId
+        timestamp
+        post {
+          nextToken
+        }
       }
       nextToken
     }

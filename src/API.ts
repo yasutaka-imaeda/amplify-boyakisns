@@ -8,6 +8,7 @@ export type CreatePostInput = {
   content: string,
   owner?: string | null,
   timestamp: number,
+  timelinePostId?: string | null,
 };
 
 export type ModelPostConditionInput = {
@@ -18,6 +19,7 @@ export type ModelPostConditionInput = {
   and?: Array< ModelPostConditionInput | null > | null,
   or?: Array< ModelPostConditionInput | null > | null,
   not?: ModelPostConditionInput | null,
+  timelinePostId?: ModelIDInput | null,
 };
 
 export type ModelStringInput = {
@@ -72,6 +74,22 @@ export type ModelIntInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
 export type Post = {
   __typename: "Post",
   type: string,
@@ -79,6 +97,7 @@ export type Post = {
   content: string,
   owner?: string | null,
   timestamp: number,
+  timelinePostId?: string | null,
 };
 
 export type DeletePostInput = {
@@ -110,6 +129,31 @@ export type DeleteFollowRelationshipInput = {
   followeeId: string,
 };
 
+export type CreateTimelineInput = {
+  userId: string,
+  timestamp: number,
+};
+
+export type ModelTimelineConditionInput = {
+  timestamp?: ModelIntInput | null,
+  and?: Array< ModelTimelineConditionInput | null > | null,
+  or?: Array< ModelTimelineConditionInput | null > | null,
+  not?: ModelTimelineConditionInput | null,
+};
+
+export type Timeline = {
+  __typename: "Timeline",
+  userId: string,
+  timestamp: number,
+  post?: ModelPostConnection | null,
+};
+
+export type ModelPostConnection = {
+  __typename: "ModelPostConnection",
+  items:  Array<Post | null >,
+  nextToken?: string | null,
+};
+
 export type ModelPostFilterInput = {
   type?: ModelStringInput | null,
   id?: ModelIDInput | null,
@@ -119,22 +163,7 @@ export type ModelPostFilterInput = {
   and?: Array< ModelPostFilterInput | null > | null,
   or?: Array< ModelPostFilterInput | null > | null,
   not?: ModelPostFilterInput | null,
-};
-
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
+  timelinePostId?: ModelIDInput | null,
 };
 
 export enum ModelSortDirection {
@@ -142,12 +171,6 @@ export enum ModelSortDirection {
   DESC = "DESC",
 }
 
-
-export type ModelPostConnection = {
-  __typename: "ModelPostConnection",
-  items:  Array<Post | null >,
-  nextToken?: string | null,
-};
 
 export type ModelFollowRelationshipFilterInput = {
   followeeId?: ModelStringInput | null,
@@ -164,6 +187,20 @@ export type ModelFollowRelationshipConnection = {
   nextToken?: string | null,
 };
 
+export type ModelTimelineFilterInput = {
+  userId?: ModelIDInput | null,
+  timestamp?: ModelIntInput | null,
+  and?: Array< ModelTimelineFilterInput | null > | null,
+  or?: Array< ModelTimelineFilterInput | null > | null,
+  not?: ModelTimelineFilterInput | null,
+};
+
+export type ModelTimelineConnection = {
+  __typename: "ModelTimelineConnection",
+  items:  Array<Timeline | null >,
+  nextToken?: string | null,
+};
+
 export type CreatePostMutationVariables = {
   input: CreatePostInput,
   condition?: ModelPostConditionInput | null,
@@ -177,6 +214,7 @@ export type CreatePostMutation = {
     content: string,
     owner?: string | null,
     timestamp: number,
+    timelinePostId?: string | null,
   } | null,
 };
 
@@ -193,6 +231,7 @@ export type DeletePostMutation = {
     content: string,
     owner?: string | null,
     timestamp: number,
+    timelinePostId?: string | null,
   } | null,
 };
 
@@ -224,6 +263,32 @@ export type DeleteFollowRelationshipMutation = {
   } | null,
 };
 
+export type CreateTimelineMutationVariables = {
+  input: CreateTimelineInput,
+  condition?: ModelTimelineConditionInput | null,
+};
+
+export type CreateTimelineMutation = {
+  createTimeline?:  {
+    __typename: "Timeline",
+    userId: string,
+    timestamp: number,
+    post?:  {
+      __typename: "ModelPostConnection",
+      items:  Array< {
+        __typename: "Post",
+        type: string,
+        id: string,
+        content: string,
+        owner?: string | null,
+        timestamp: number,
+        timelinePostId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+  } | null,
+};
+
 export type GetPostQueryVariables = {
   id: string,
 };
@@ -236,6 +301,7 @@ export type GetPostQuery = {
     content: string,
     owner?: string | null,
     timestamp: number,
+    timelinePostId?: string | null,
   } | null,
 };
 
@@ -257,6 +323,7 @@ export type ListPostsQuery = {
       content: string,
       owner?: string | null,
       timestamp: number,
+      timelinePostId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -296,6 +363,55 @@ export type ListFollowRelationshipsQuery = {
   } | null,
 };
 
+export type GetTimelineQueryVariables = {
+  userId: string,
+};
+
+export type GetTimelineQuery = {
+  getTimeline?:  {
+    __typename: "Timeline",
+    userId: string,
+    timestamp: number,
+    post?:  {
+      __typename: "ModelPostConnection",
+      items:  Array< {
+        __typename: "Post",
+        type: string,
+        id: string,
+        content: string,
+        owner?: string | null,
+        timestamp: number,
+        timelinePostId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+  } | null,
+};
+
+export type ListTimelinesQueryVariables = {
+  userId?: string | null,
+  filter?: ModelTimelineFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListTimelinesQuery = {
+  listTimelines?:  {
+    __typename: "ModelTimelineConnection",
+    items:  Array< {
+      __typename: "Timeline",
+      userId: string,
+      timestamp: number,
+      post?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type OnCreateFollowRelationshipSubscriptionVariables = {
   followerId?: string | null,
 };
@@ -319,5 +435,30 @@ export type OnDeleteFollowRelationshipSubscription = {
     followeeId: string,
     followerId: string,
     timestamp: number,
+  } | null,
+};
+
+export type OnCreateTimelineSubscriptionVariables = {
+  userId?: string | null,
+};
+
+export type OnCreateTimelineSubscription = {
+  onCreateTimeline?:  {
+    __typename: "Timeline",
+    userId: string,
+    timestamp: number,
+    post?:  {
+      __typename: "ModelPostConnection",
+      items:  Array< {
+        __typename: "Post",
+        type: string,
+        id: string,
+        content: string,
+        owner?: string | null,
+        timestamp: number,
+        timelinePostId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
   } | null,
 };
