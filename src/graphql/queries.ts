@@ -39,3 +39,36 @@ export const listPosts = /* GraphQL */ `
     }
   }
 `;
+export const getFollowRelationship = /* GraphQL */ `
+  query GetFollowRelationship($followeeId: String!) {
+    getFollowRelationship(followeeId: $followeeId) {
+      followeeId
+      followerId
+      timestamp
+    }
+  }
+`;
+export const listFollowRelationships = /* GraphQL */ `
+  query ListFollowRelationships(
+    $followeeId: String
+    $filter: ModelFollowRelationshipFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listFollowRelationships(
+      followeeId: $followeeId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        followeeId
+        followerId
+        timestamp
+      }
+      nextToken
+    }
+  }
+`;

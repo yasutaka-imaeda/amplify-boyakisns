@@ -85,6 +85,31 @@ export type DeletePostInput = {
   id: string,
 };
 
+export type CreateFollowRelationshipInput = {
+  followeeId: string,
+  followerId: string,
+  timestamp: number,
+};
+
+export type ModelFollowRelationshipConditionInput = {
+  followerId?: ModelStringInput | null,
+  timestamp?: ModelIntInput | null,
+  and?: Array< ModelFollowRelationshipConditionInput | null > | null,
+  or?: Array< ModelFollowRelationshipConditionInput | null > | null,
+  not?: ModelFollowRelationshipConditionInput | null,
+};
+
+export type FollowRelationship = {
+  __typename: "FollowRelationship",
+  followeeId: string,
+  followerId: string,
+  timestamp: number,
+};
+
+export type DeleteFollowRelationshipInput = {
+  followeeId: string,
+};
+
 export type ModelPostFilterInput = {
   type?: ModelStringInput | null,
   id?: ModelIDInput | null,
@@ -124,6 +149,21 @@ export type ModelPostConnection = {
   nextToken?: string | null,
 };
 
+export type ModelFollowRelationshipFilterInput = {
+  followeeId?: ModelStringInput | null,
+  followerId?: ModelStringInput | null,
+  timestamp?: ModelIntInput | null,
+  and?: Array< ModelFollowRelationshipFilterInput | null > | null,
+  or?: Array< ModelFollowRelationshipFilterInput | null > | null,
+  not?: ModelFollowRelationshipFilterInput | null,
+};
+
+export type ModelFollowRelationshipConnection = {
+  __typename: "ModelFollowRelationshipConnection",
+  items:  Array<FollowRelationship | null >,
+  nextToken?: string | null,
+};
+
 export type CreatePostMutationVariables = {
   input: CreatePostInput,
   condition?: ModelPostConditionInput | null,
@@ -152,6 +192,34 @@ export type DeletePostMutation = {
     id: string,
     content: string,
     owner?: string | null,
+    timestamp: number,
+  } | null,
+};
+
+export type CreateFollowRelationshipMutationVariables = {
+  input: CreateFollowRelationshipInput,
+  condition?: ModelFollowRelationshipConditionInput | null,
+};
+
+export type CreateFollowRelationshipMutation = {
+  createFollowRelationship?:  {
+    __typename: "FollowRelationship",
+    followeeId: string,
+    followerId: string,
+    timestamp: number,
+  } | null,
+};
+
+export type DeleteFollowRelationshipMutationVariables = {
+  input: DeleteFollowRelationshipInput,
+  condition?: ModelFollowRelationshipConditionInput | null,
+};
+
+export type DeleteFollowRelationshipMutation = {
+  deleteFollowRelationship?:  {
+    __typename: "FollowRelationship",
+    followeeId: string,
+    followerId: string,
     timestamp: number,
   } | null,
 };
@@ -191,5 +259,65 @@ export type ListPostsQuery = {
       timestamp: number,
     } | null >,
     nextToken?: string | null,
+  } | null,
+};
+
+export type GetFollowRelationshipQueryVariables = {
+  followeeId: string,
+};
+
+export type GetFollowRelationshipQuery = {
+  getFollowRelationship?:  {
+    __typename: "FollowRelationship",
+    followeeId: string,
+    followerId: string,
+    timestamp: number,
+  } | null,
+};
+
+export type ListFollowRelationshipsQueryVariables = {
+  followeeId?: string | null,
+  filter?: ModelFollowRelationshipFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListFollowRelationshipsQuery = {
+  listFollowRelationships?:  {
+    __typename: "ModelFollowRelationshipConnection",
+    items:  Array< {
+      __typename: "FollowRelationship",
+      followeeId: string,
+      followerId: string,
+      timestamp: number,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateFollowRelationshipSubscriptionVariables = {
+  followerId?: string | null,
+};
+
+export type OnCreateFollowRelationshipSubscription = {
+  onCreateFollowRelationship?:  {
+    __typename: "FollowRelationship",
+    followeeId: string,
+    followerId: string,
+    timestamp: number,
+  } | null,
+};
+
+export type OnDeleteFollowRelationshipSubscriptionVariables = {
+  followerId?: string | null,
+};
+
+export type OnDeleteFollowRelationshipSubscription = {
+  onDeleteFollowRelationship?:  {
+    __typename: "FollowRelationship",
+    followeeId: string,
+    followerId: string,
+    timestamp: number,
   } | null,
 };

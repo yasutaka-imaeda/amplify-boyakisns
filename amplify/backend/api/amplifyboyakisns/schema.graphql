@@ -25,3 +25,53 @@ type Post
   owner: String @index(name: "BySpecificOwner", sortKeyFields: ["timestamp"])
   timestamp: Int!
 }
+
+type FollowRelationship
+  @model(
+    mutations: {
+      create: "createFollowRelationship"
+      delete: "deleteFollowRelationship"
+      update: null
+    }
+    timestamps: null
+  )
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "followerId"
+        provider: userPools
+        operations: [read, create, delete]
+      }
+      {
+        allow: private
+        provider: userPools
+        operations: [read, create, delete]
+      }
+    ]
+  ) {
+  followeeId: String! @primaryKey
+  followerId: String!
+  timestamp: Int!
+}
+
+type Timeline
+  @model(
+    mutations: { create: "createTimeline", delete: null, update: null }
+    timestamps: null
+  )
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "userId"
+        provider: userPools
+        operations: [read, create]
+      }
+      { allow: private, provider: iam, operations: [read, create] }
+    ]
+  ) {
+  userId: ID! @primaryKey
+  timestamp: Int!
+  post: [Post] @hasMany
+}
