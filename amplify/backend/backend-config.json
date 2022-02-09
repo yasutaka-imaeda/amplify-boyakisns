@@ -11,11 +11,7 @@
               "userPoolId": "authamplifyboyakisns08a64149"
             }
           },
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "AWS_IAM"
-            }
-          ]
+          "additionalAuthenticationProviders": []
         }
       }
     }

@@ -8,11 +8,7 @@
       "mode": "AMAZON_COGNITO_USER_POOLS",
       "cognitoUserPoolId": "authamplifyboyakisns08a64149"
     },
-    "additionalAuthTypes": [
-      {
-        "mode": "AWS_IAM"
-      }
-    ],
+    "additionalAuthTypes": [],
     "conflictResolution": {}
   }
 }
