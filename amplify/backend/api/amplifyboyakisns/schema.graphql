@@ -17,6 +17,7 @@ type Post
         provider: userPools
         operations: [read, create, delete]
       }
+      { allow: private, provider: iam, operations: [create] }
     ]
   ) {
   type: String! @index(name: "SortByTimestamp", sortKeyFields: ["timestamp"])
@@ -48,6 +49,7 @@ type FollowRelationship
         provider: userPools
         operations: [read, create, delete]
       }
+      { allow: private, provider: iam, operations: [read] }
     ]
   ) {
   followeeId: String! @primaryKey
@@ -74,4 +76,10 @@ type Timeline
   userId: ID! @primaryKey
   timestamp: Int!
   post: [Post] @hasMany
+}
+
+type Mutation {
+  createPostAndTimeline(content: String!): Post
+    @function(name: "createPostAndTimeline-${env}")
+    @auth(rules: [{ allow: private, provider: userPools }])
 }

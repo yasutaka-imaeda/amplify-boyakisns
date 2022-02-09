@@ -19,6 +19,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 import AllPosts from "../src/containers/AllPosts";
 import PostsBySpecifiedUser from "./containers/PostsBySpecifiedUser";
+import Timeline from "./containers/Timeline";
 
 Amplify.configure(config);
 
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App() {
+const App = () => {
   const [authState, setAuthState] = React.useState<any>();
   const [user, setUser] = React.useState<any>();
 
@@ -95,7 +96,7 @@ function App() {
         <CssBaseline />
         <HashRouter>
           <Switch>
-            <Route exact path="/" component={AllPosts} />
+            <Route exact path="/" component={Timeline} />
             <Route exact path="/global-timeline" component={AllPosts} />
             <Route exact path="/:userId" component={PostsBySpecifiedUser} />
             <Redirect path="*" to="/" />
@@ -131,6 +132,6 @@ function App() {
   //     />
   //   </AmplifyAuthenticator>
   // );
-}
+};
 
 export default withAuthenticator(App);

@@ -10,11 +10,15 @@ import {
   TextField,
   ListItemIcon,
 } from "@material-ui/core";
-import { Person as PersonIcon, Public as PublicIcon } from "@material-ui/icons";
+import {
+  Person as PersonIcon,
+  Public as PublicIcon,
+  Home as HomeIcon,
+} from "@material-ui/icons";
 
 import { Auth, API, graphqlOperation } from "aws-amplify";
 
-import { createPost } from "../graphql/mutations";
+import { createPost, createTimeline } from "../graphql/mutations";
 import { useHistory } from "react-router";
 import { useParams } from "react-router";
 
