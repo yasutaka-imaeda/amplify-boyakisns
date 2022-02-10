@@ -42,33 +42,31 @@ export const listPosts = /* GraphQL */ `
   }
 `;
 export const getFollowRelationship = /* GraphQL */ `
-  query GetFollowRelationship($followeeId: String!) {
-    getFollowRelationship(followeeId: $followeeId) {
+  query GetFollowRelationship($id: ID!) {
+    getFollowRelationship(id: $id) {
       followeeId
       followerId
       timestamp
+      id
     }
   }
 `;
 export const listFollowRelationships = /* GraphQL */ `
   query ListFollowRelationships(
-    $followeeId: String
     $filter: ModelFollowRelationshipFilterInput
     $limit: Int
     $nextToken: String
-    $sortDirection: ModelSortDirection
   ) {
     listFollowRelationships(
-      followeeId: $followeeId
       filter: $filter
       limit: $limit
       nextToken: $nextToken
-      sortDirection: $sortDirection
     ) {
       items {
         followeeId
         followerId
         timestamp
+        id
       }
       nextToken
     }

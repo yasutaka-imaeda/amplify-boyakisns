@@ -52,7 +52,8 @@ type FollowRelationship
       { allow: private, provider: iam, operations: [read] }
     ]
   ) {
-  followeeId: String! @primaryKey
+  followeeId: String!
+    @index(name: "SortByFollowerId", sortKeyFields: ["followerId"])
   followerId: String!
   timestamp: Int!
 }

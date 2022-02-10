@@ -72,20 +72,31 @@ const Sideber: any = ({ activeListItem }: any) => {
   const { userId }: any = useParams();
 
   const onPost = async () => {
+    const random = Math.random();
+    const random2 = Math.random();
     const res: any = await API.graphql(
-      graphqlOperation(createPostAndTimeline, { content: value })
+      graphqlOperation(createPost, {
+        input: {
+          type: "post",
+          content: value,
+          id: `${random}`,
+          timestamp: Math.floor(Date.now() / 1000),
+          owner: userId,
+          timelinePostId: `${random2}`,
+        },
+      })
     );
     // const onPost = async () => {
     //   const random = Math.random();
     //   const res = await API.graphql(
     //     graphqlOperation(createPost, {
-    //       input: {
-    //         type: "post",
-    //         content: value,
-    //         id: `${random}`,
-    //         timestamp: Math.floor(Date.now() / 1000),
-    //         owner: userId,
-    //       },
+    // input: {
+    //   type: "post",
+    //   content: value,
+    //   id: `${random}`,
+    //   timestamp: Math.floor(Date.now() / 1000),
+    //   owner: userId,
+    // },
     //     })
     //   );
 

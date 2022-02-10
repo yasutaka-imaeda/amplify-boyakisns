@@ -108,9 +108,11 @@ export type CreateFollowRelationshipInput = {
   followeeId: string,
   followerId: string,
   timestamp: number,
+  id?: string | null,
 };
 
 export type ModelFollowRelationshipConditionInput = {
+  followeeId?: ModelStringInput | null,
   followerId?: ModelStringInput | null,
   timestamp?: ModelIntInput | null,
   and?: Array< ModelFollowRelationshipConditionInput | null > | null,
@@ -123,10 +125,11 @@ export type FollowRelationship = {
   followeeId: string,
   followerId: string,
   timestamp: number,
+  id: string,
 };
 
 export type DeleteFollowRelationshipInput = {
-  followeeId: string,
+  id: string,
 };
 
 export type CreateTimelineInput = {
@@ -246,6 +249,7 @@ export type CreateFollowRelationshipMutation = {
     followeeId: string,
     followerId: string,
     timestamp: number,
+    id: string,
   } | null,
 };
 
@@ -260,6 +264,7 @@ export type DeleteFollowRelationshipMutation = {
     followeeId: string,
     followerId: string,
     timestamp: number,
+    id: string,
   } | null,
 };
 
@@ -346,7 +351,7 @@ export type ListPostsQuery = {
 };
 
 export type GetFollowRelationshipQueryVariables = {
-  followeeId: string,
+  id: string,
 };
 
 export type GetFollowRelationshipQuery = {
@@ -355,15 +360,14 @@ export type GetFollowRelationshipQuery = {
     followeeId: string,
     followerId: string,
     timestamp: number,
+    id: string,
   } | null,
 };
 
 export type ListFollowRelationshipsQueryVariables = {
-  followeeId?: string | null,
   filter?: ModelFollowRelationshipFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListFollowRelationshipsQuery = {
@@ -374,6 +378,7 @@ export type ListFollowRelationshipsQuery = {
       followeeId: string,
       followerId: string,
       timestamp: number,
+      id: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -438,6 +443,7 @@ export type OnCreateFollowRelationshipSubscription = {
     followeeId: string,
     followerId: string,
     timestamp: number,
+    id: string,
   } | null,
 };
 
@@ -451,6 +457,7 @@ export type OnDeleteFollowRelationshipSubscription = {
     followeeId: string,
     followerId: string,
     timestamp: number,
+    id: string,
   } | null,
 };
 

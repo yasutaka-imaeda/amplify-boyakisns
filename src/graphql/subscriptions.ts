@@ -25,12 +25,14 @@ export const onDeletePost = /* GraphQL */ `
   }
 `;
 
+
 export const onCreateFollowRelationship = /* GraphQL */ `
   subscription OnCreateFollowRelationship($followerId: String) {
     onCreateFollowRelationship(followerId: $followerId) {
       followeeId
       followerId
       timestamp
+      id
     }
   }
 `;
@@ -40,6 +42,7 @@ export const onDeleteFollowRelationship = /* GraphQL */ `
       followeeId
       followerId
       timestamp
+      id
     }
   }
 `;

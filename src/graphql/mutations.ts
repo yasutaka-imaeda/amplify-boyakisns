@@ -41,6 +41,7 @@ export const createFollowRelationship = /* GraphQL */ `
       followeeId
       followerId
       timestamp
+      id
     }
   }
 `;
@@ -53,6 +54,7 @@ export const deleteFollowRelationship = /* GraphQL */ `
       followeeId
       followerId
       timestamp
+      id
     }
   }
 `;
