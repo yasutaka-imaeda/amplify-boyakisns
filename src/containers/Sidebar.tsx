@@ -18,7 +18,7 @@ import {
 
 import { Auth, API, graphqlOperation } from "aws-amplify";
 
-import { createPost, createTimeline } from "../graphql/mutations";
+import { createPost, createPostAndTimeline } from "../graphql/mutations";
 import { useHistory } from "react-router";
 import { useParams } from "react-router";
 
@@ -72,18 +72,22 @@ const Sideber: any = ({ activeListItem }: any) => {
   const { userId }: any = useParams();
 
   const onPost = async () => {
-    const random = Math.random();
-    const res = await API.graphql(
-      graphqlOperation(createPost, {
-        input: {
-          type: "post",
-          content: value,
-          id: `${random}`,
-          timestamp: Math.floor(Date.now() / 1000),
-          owner: userId,
-        },
-      })
+    const res: any = await API.graphql(
+      graphqlOperation(createPostAndTimeline, { content: value })
     );
+    // const onPost = async () => {
+    //   const random = Math.random();
+    //   const res = await API.graphql(
+    //     graphqlOperation(createPost, {
+    //       input: {
+    //         type: "post",
+    //         content: value,
+    //         id: `${random}`,
+    //         timestamp: Math.floor(Date.now() / 1000),
+    //         owner: userId,
+    //       },
+    //     })
+    //   );
 
     console.log(res);
     setValue("");
@@ -105,6 +109,19 @@ const Sideber: any = ({ activeListItem }: any) => {
     >
       <div className={classes.toolbar} />
       <List>
+        <ListItem
+          button
+          selected={activeListItem === "Home"}
+          onClick={() => {
+            history.push("/");
+          }}
+          key="home"
+        >
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItem>
         <ListItem
           button
           selected={activeListItem === "global-timeline"}

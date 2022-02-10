@@ -289,6 +289,22 @@ export type CreateTimelineMutation = {
   } | null,
 };
 
+export type CreatePostAndTimelineMutationVariables = {
+  content: string,
+};
+
+export type CreatePostAndTimelineMutation = {
+  createPostAndTimeline?:  {
+    __typename: "Post",
+    type: string,
+    id: string,
+    content: string,
+    owner?: string | null,
+    timestamp: number,
+    timelinePostId?: string | null,
+  } | null,
+};
+
 export type GetPostQueryVariables = {
   id: string,
 };

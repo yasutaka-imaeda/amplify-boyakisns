@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "amplifyboyakisns08a64149": {}
+      },
+      "function": {
+        "createPostAndTimeline": {
+          "deploymentBucketName": "amplify-amplifyboyakisns-main-14817-deployment",
+          "s3Key": "amplify-builds/createPostAndTimeline-54654457575934346970-build.zip"
+        }
       }
     }
   },
