@@ -138,11 +138,12 @@ const PostsBySpecifiedUser: any = () => {
       const post = msg.value.data.onCreatePost;
       if (post.owner !== userId) return;
       dispatch({
-         type: SUBSCRIPTION,
-         post: post });
+        type: SUBSCRIPTION,
+        post: post,
+      });
     });
     return () => subscription.unsubscribe();
-  }, []);
+  }, [userId]);
 
   return (
     <React.Fragment>
