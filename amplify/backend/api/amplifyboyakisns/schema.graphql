@@ -2,7 +2,6 @@ type Post
   @model(
     mutations: { create: "createPost", delete: "deletePost", update: null }
     timestamps: null
-    subscriptions: { level: public }
   )
   @auth(
     rules: [
