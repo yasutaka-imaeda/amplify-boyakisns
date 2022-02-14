@@ -7,7 +7,7 @@ import { onCreatePost } from "../graphql/subscriptions";
 
 import PostList from "../components/PostList";
 import Sidebar from "./Sidebar";
-import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+// import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 
 import Amplify from "aws-amplify";
 import config from "../aws-exports";
@@ -53,6 +53,7 @@ const AllPosts: any = () => {
   const getPosts = async (type: any, nextToken = null) => {
     const res: any = await API.graphql(graphqlOperation(listPosts));
     console.log(res);
+    // TODO:時間の降順に並び替える
     dispatch({ type: type, posts: res.data.listPosts.items });
     setNextToken(res.data.listPosts.nextToken);
     setIsLoading(false);
@@ -67,12 +68,12 @@ const AllPosts: any = () => {
     getPosts(INITIAL_QUERY);
 
     const subscriptionGQL: any = API.graphql(graphqlOperation(onCreatePost));
-    const subscription: any = subscriptionGQL.subscribe({
-      next: (msg: any) => {
-        console.log("allposts subscription fired");
-        const post = msg.value.data.onCreatePost;
-        dispatch({ type: SUBSCRIPTION, post: post });
-      },
+    const subscription: any = subscriptionGQL.subscribe((msg: any) => {
+      console.log("allposts subscription fired");
+      const post = msg.value.data.onCreatePost;
+      dispatch({ 
+        type: SUBSCRIPTION,
+         post: post });
     });
     return () => subscription.unsubscribe();
   }, []);

@@ -3,7 +3,11 @@ import React, { useState, useEffect, useReducer } from "react";
 import { Auth, API, graphqlOperation } from "aws-amplify";
 import { useParams } from "react-router";
 
-import { listPosts, getFollowRelationship } from "../graphql/queries";
+import {
+  listPosts,
+  // getFollowRelationship,
+  listFollowRelationships,
+} from "../graphql/queries";
 import {
   createFollowRelationship,
   deleteFollowRelationship,
@@ -45,6 +49,7 @@ const PostsBySpecifiedUser: any = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [isRelatiionId, setIsRelatiionId] = useState<any>();
 
   const getPosts = async (type: any, nextToken = null) => {
     const res: any = await API.graphql(graphqlOperation(listPosts));
@@ -55,14 +60,27 @@ const PostsBySpecifiedUser: any = () => {
   };
 
   const getIsFollowing = async ({ followerId, followeeId }: any) => {
+    console.log(followeeId);
+    console.log(followerId);
+    const filter = {
+      followeeId: {
+        eq: followeeId,
+      },
+      followerId: {
+        eq: followerId,
+      },
+    };
     const res: any = await API.graphql(
-      graphqlOperation(getFollowRelationship, {
-        followeeId: followeeId,
-      })
+      graphqlOperation(listFollowRelationships, { filter: filter })
     );
     console.log(res);
-    // TODO：followerIdのフィルター処理を記述
-    return res.data.getFollowRelationship !== null;
+    if (res.data.listFollowRelationships.items.length === 0) {
+      setIsFollowing(false);
+    } else {
+      setIsRelatiionId(res.data.listFollowRelationships.items[0].id);
+      setIsFollowing(true);
+    }
+    return res.data.listFollowRelationships.items.length !== 0;
   };
 
   const getAdditionalPosts = () => {
@@ -71,12 +89,15 @@ const PostsBySpecifiedUser: any = () => {
   };
 
   const follow = async () => {
+    const random = Math.random();
     console.log("follow");
     const input = {
       followeeId: userId,
       followerId: currentUser.username,
       timestamp: Math.floor(Date.now() / 1000),
+      id: `${random}`,
     };
+    setIsRelatiionId(`${random}`);
     const res: any = await API.graphql(
       graphqlOperation(createFollowRelationship, { input: input })
     );
@@ -87,8 +108,7 @@ const PostsBySpecifiedUser: any = () => {
   const unfollow = async () => {
     console.log("unfollow");
     const input = {
-      followeeId: userId,
-      followerId: currentUser.username,
+      id: isRelatiionId,
     };
     const res: any = await API.graphql(
       graphqlOperation(deleteFollowRelationship, { input: input })
@@ -114,12 +134,12 @@ const PostsBySpecifiedUser: any = () => {
     init();
 
     const subscriptionGQL: any = API.graphql(graphqlOperation(onCreatePost));
-    const subscription: any = subscriptionGQL.subscribe({
-      next: (msg: any) => {
-        const post = msg.value.data.onCreatePost;
-        if (post.owner !== userId) return;
-        dispatch({ type: SUBSCRIPTION, post: post });
-      },
+    const subscription: any = subscriptionGQL.subscribe((msg: any) => {
+      const post = msg.value.data.onCreatePost;
+      if (post.owner !== userId) return;
+      dispatch({
+         type: SUBSCRIPTION,
+         post: post });
     });
     return () => subscription.unsubscribe();
   }, []);

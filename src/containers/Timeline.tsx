@@ -79,15 +79,13 @@ export default function Timeline() {
     const subscribeGql: any = API.graphql(
       graphqlOperation(onCreateTimeline, { userId: currentUser.username })
     );
-    const subscription = subscribeGql.subscribe({
-      next: (msg: any) => {
-        console.log("timeline subscription fired");
-        console.log(msg);
-        dispatch({
-          type: SUBSCRIPTION,
-          post: msg.value.data.onCreateTimeline.post,
-        });
-      },
+    const subscription = subscribeGql.subscribe((msg: any) => {
+      console.log("timeline subscription fired");
+      console.log(msg);
+      dispatch({
+        type: SUBSCRIPTION,
+        post: msg.value.data.onCreateTimeline.post,
+      });
     });
     return () => subscription.unsubscribe();
   }, [currentUser]);
