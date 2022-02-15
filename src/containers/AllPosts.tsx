@@ -65,15 +65,27 @@ const AllPosts: any = () => {
   };
 
   useEffect(() => {
-    getPosts(INITIAL_QUERY);
+    let testmsg: any;
+    const postGQL: any = API.graphql(graphqlOperation(onCreatePost));
+    console.log("test");
+    console.log(postGQL);
+    const postmsg = postGQL.subscribe((msg: any) => {
+      testmsg = msg.value.data.onCreatePost;
+    });
+    console.log(testmsg);
+    return () => postmsg.unsbscribe();
+  }, []);
 
+  useEffect(() => {
+    getPosts(INITIAL_QUERY);
     const subscriptionGQL: any = API.graphql(graphqlOperation(onCreatePost));
     const subscription: any = subscriptionGQL.subscribe((msg: any) => {
       console.log("allposts subscription fired");
       const post = msg.value.data.onCreatePost;
-      dispatch({ 
-        type: SUBSCRIPTION,
-         post: post });
+      dispatch({
+        // type: SUBSCRIPTION,
+        post: post,
+      });
     });
     return () => subscription.unsubscribe();
   }, []);

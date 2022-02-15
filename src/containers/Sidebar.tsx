@@ -20,8 +20,8 @@ import { Auth, API, graphqlOperation } from "aws-amplify";
 
 import {
   createPost,
-  createPostAndTimeline,
-  createTimeline,
+  // createPostAndTimeline,
+  // createTimeline,
 } from "../graphql/mutations";
 import { useHistory } from "react-router";
 import { useParams } from "react-router";
@@ -89,22 +89,22 @@ const Sideber: any = ({ activeListItem }: any) => {
         },
       })
     );
-    const resT: any = await API.graphql(
-      graphqlOperation(createTimeline, {
-        input: {
-          timestamp: Math.floor(Date.now() / 1000),
-          userId: userId,
-          // post: {
-          //   type: "post",
-          //   content: value,
-          //   id: `${random}`,
-          //   timestamp: Math.floor(Date.now() / 1000),
-          //   owner: userId,
-          //   timelinePostId: `${random2}`,
-          // },
-        },
-      })
-    );
+    // const resT: any = await API.graphql(
+    //   graphqlOperation(createTimeline, {
+    //     input: {
+    //       timestamp: Math.floor(Date.now() / 1000),
+    //       userId: userId,
+    //       // post: {
+    //       //   type: "post",
+    //       //   content: value,
+    //       //   id: `${random}`,
+    //       //   timestamp: Math.floor(Date.now() / 1000),
+    //       //   owner: userId,
+    //       //   timelinePostId: `${random2}`,
+    //       // },
+    //     },
+    //   })
+    // );
     // const onPost = async () => {
     //   const random = Math.random();
     //   const res = await API.graphql(
@@ -128,7 +128,7 @@ const Sideber: any = ({ activeListItem }: any) => {
     // );
 
     console.log(res);
-    console.log(resT);
+    // console.log(resT);
     // console.log(resPT);
     setValue("");
   };

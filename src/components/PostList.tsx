@@ -167,8 +167,8 @@ export default function PostList({
 }: any) {
   const classes = useStyles();
   const history = useHistory();
-  console.log(history.location.pathname);
-  console.log(posts);
+  // console.log(history.location.pathname);
+  // console.log(posts);
   const showOwner = history.location.pathname;
   let showPost: any = posts;
   if (showOwner === "/global-timeline") {
@@ -225,7 +225,7 @@ function PostItem({ post }: any) {
   const classes = useStyles();
   const history = useHistory();
   const now = moment();
-  console.log(now);
+  // console.log(now);
 
   const calcTimestampDiff = (timestamp: any) => {
     const scales = [

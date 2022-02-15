@@ -53,15 +53,15 @@ const PostsBySpecifiedUser: any = () => {
 
   const getPosts = async (type: any, nextToken = null) => {
     const res: any = await API.graphql(graphqlOperation(listPosts));
-    console.log(res);
+    // console.log(res);
     dispatch({ type: type, posts: res.data.listPosts.items });
     setNextToken(res.data.listPosts.nextToken);
     setIsLoading(false);
   };
 
   const getIsFollowing = async ({ followerId, followeeId }: any) => {
-    console.log(followeeId);
-    console.log(followerId);
+    // console.log(followeeId);
+    // console.log(followerId);
     const filter = {
       followeeId: {
         eq: followeeId,
@@ -73,7 +73,7 @@ const PostsBySpecifiedUser: any = () => {
     const res: any = await API.graphql(
       graphqlOperation(listFollowRelationships, { filter: filter })
     );
-    console.log(res);
+    // console.log(res);
     if (res.data.listFollowRelationships.items.length === 0) {
       setIsFollowing(false);
     } else {

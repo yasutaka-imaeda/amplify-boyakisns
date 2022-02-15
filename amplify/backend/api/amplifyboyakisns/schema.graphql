@@ -77,9 +77,3 @@ type Timeline
   timestamp: Int!
   post: [Post] @hasMany
 }
-
-type Mutation {
-  createPostAndTimeline(content: String!): Post
-    @function(name: "createPostAndTimeline-${env}")
-    @auth(rules: [{ allow: private, provider: userPools }])
-}
