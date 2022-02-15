@@ -80,15 +80,3 @@ export const createTimeline = /* GraphQL */ `
     }
   }
 `;
-export const createPostAndTimeline = /* GraphQL */ `
-  mutation CreatePostAndTimeline($content: String!) {
-    createPostAndTimeline(content: $content) {
-      type
-      id
-      content
-      owner
-      timestamp
-      timelinePostId
-    }
-  }
-`;

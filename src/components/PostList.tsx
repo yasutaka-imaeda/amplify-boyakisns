@@ -169,6 +169,15 @@ export default function PostList({
   const history = useHistory();
   // console.log(history.location.pathname);
   // console.log(posts);
+  posts.sort(function (obj1: any, obj2: any) {
+    // @ts-ignore
+    return obj1.timestamp < obj2.timestamp
+      ? 1
+      : //@ts-ignore
+      obj1.timestamp > obj2.timestamp
+      ? -1
+      : 0;
+  });
   const showOwner = history.location.pathname;
   let showPost: any = posts;
   if (showOwner === "/global-timeline") {

@@ -52,9 +52,19 @@ const AllPosts: any = () => {
 
   const getPosts = async (type: any, nextToken = null) => {
     const res: any = await API.graphql(graphqlOperation(listPosts));
-    console.log(res);
-    // TODO:時間の降順に並び替える
-    dispatch({ type: type, posts: res.data.listPosts.items });
+    // console.log(res);
+    const data = res.data.listPosts.items;
+    console.log(data);
+    data.sort(function (obj1: any, obj2: any) {
+      // @ts-ignore
+      return obj1.timestamp < obj2.timestamp
+        ? 1
+        : //@ts-ignore
+        obj1.timestamp > obj2.timestamp
+        ? -1
+        : 0;
+    });
+    dispatch({ type: type, posts: data });
     setNextToken(res.data.listPosts.nextToken);
     setIsLoading(false);
   };
@@ -64,17 +74,17 @@ const AllPosts: any = () => {
     getPosts(ADDITIONAL_QUERY, nextToken);
   };
 
-  useEffect(() => {
-    let testmsg: any;
-    const postGQL: any = API.graphql(graphqlOperation(onCreatePost));
-    console.log("test");
-    console.log(postGQL);
-    const postmsg = postGQL.subscribe((msg: any) => {
-      testmsg = msg.value.data.onCreatePost;
-    });
-    console.log(testmsg);
-    return () => postmsg.unsbscribe();
-  }, []);
+  // useEffect(() => {
+  //   let testmsg: any;
+  //   const postGQL: any = API.graphql(graphqlOperation(onCreatePost));
+  //   console.log("test");
+  //   console.log(postGQL);
+  //   const postmsg = postGQL.subscribe((msg: any) => {
+  //     testmsg = msg.value.data.onCreatePost;
+  //   });
+  //   console.log(testmsg);
+  //   return () => postmsg.unsbscribe();
+  // }, []);
 
   useEffect(() => {
     getPosts(INITIAL_QUERY);
